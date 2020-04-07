@@ -1,0 +1,91 @@
+
+#define com_pin 14
+
+int data_out[5];
+
+
+byte measure_run () {
+  
+  byte input_value;
+  int count;
+  
+  for (count = 0; count < 8; count++) {
+    
+    while (digitalRead(com_pin) != 1);
+    
+    delayMicroseconds (50);
+    
+    if (digitalRead(com_pin) == 1) {
+      
+      bitSet (input_value, 7-count);
+      while (digitalRead(com_pin) == 1);
+      
+    }
+    
+  }
+  
+  return (input_value);
+  
+}
+
+
+void setup() {
+
+  Serial.begin (9600);
+  
+  pinMode (com_pin, OUTPUT);
+  digitalWrite (com_pin, HIGH);
+
+}
+
+
+void loop() {
+
+  
+  delay (500);
+  // Wakeup call:
+ 
+  digitalWrite (com_pin, LOW);
+  delay (18);
+  
+  digitalWrite (com_pin, HIGH);
+  delayMicroseconds (1);
+  
+  
+  pinMode (com_pin, INPUT);
+  
+  delayMicroseconds (45);
+  
+  if (digitalRead (com_pin) != 0) {
+   
+     Serial.println ("Error: 1");
+     return;
+    
+  }
+  
+  delayMicroseconds (80);
+  
+  if (digitalRead (com_pin) != 1) {
+    
+    Serial.println ("Error: 2");
+    return;
+    
+  }
+  
+  delayMicroseconds (80);
+  
+  // Reading out the sensor data:
+  
+  int measure_counter;
+  
+  for (measure_counter = 0; measure_counter < 5; measure_counter++) {
+    
+    data_out[measure_counter] = measure_run();
+    Serial.println (data_out[measure_counter]);
+    
+  }
+  
+  
+  Serial.println ("Got through :)");
+  
+}
