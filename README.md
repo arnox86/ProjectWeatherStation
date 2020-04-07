@@ -7,7 +7,7 @@ The code is written in C++ with Arduino slang.
 
 Here a list of the used components:
   - DHT11: A pretty accurate temperature an humidity sensor
-  - 1608A: A small, but useful LCD-Display for direct output of the data
+  - 1608A: A small, but useful LCD display for direct output of the data
 
 
 The complete code including the libraries is written by myself.
