@@ -1,6 +1,4 @@
 
-// Program has bug with the checksum
-
 #define com_pin 14
 
 int data_out[5];
