@@ -1,7 +1,6 @@
 # Project Weatherstation with Arduino
 
-Here you can see my project to build a small weatherstation with temperature, humidity and sunlight exposure sensors plus
-an LCD-Display as an output.
+Here you can see my project to build a small Arduino based weatherstation with temperature, humidity and sunlight exposure sensors plus an LCD-Display as an output.
 
 The code is written in C++ with Arduino slang.
 
