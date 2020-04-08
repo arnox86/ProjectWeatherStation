@@ -1,1 +1,140 @@
 
+
+/*
+*    Methods:
+*      - dht11_init (communication pin to dht11)
+*      - dht11_measure ("temp" or "hum")
+*      - measure_run (): Not really usable
+*/
+
+
+int compin_dht11;
+
+
+void dht11_init (int met_inp) {
+  
+  compin_dht11 = met_inp;
+  
+  pinMode (compin_dht11, OUTPUT);
+  digitalWrite (compin_dht11, HIGH);
+  
+  return;
+  
+}
+
+
+byte measure_run() {
+  
+  byte input_value;
+  int count;
+  
+  for (count = 0; count < 8; count++) {
+    
+    // Wainting until the next bit comes
+    while (digitalRead(compin_dht11) != 1);
+    
+    // Waiting 50us, if its HIGH, it is a 1, if its only 30us long HIGH,
+    //  its a 0
+    delayMicroseconds (50);
+    
+    if (digitalRead(compin_dht11) == 1) {
+      
+      // If its a 1 the bit gets a 1, else it stays a 0
+      bitSet (input_value, 7-count);
+      
+      // Waiting until the transmittion is ready
+      while (digitalRead(compin_dht11) == 1);
+      
+    }
+    
+  }
+  
+  return (input_value);
+  
+}
+
+
+double dht11_measure(char out_type){
+  
+  
+  int data_out[5];
+  double get_out;
+  
+  delay (100);
+  
+  // Wakeup call for the DHT11:
+  
+  digitalWrite (compin_dht11, LOW);
+  delay (18);
+  
+  digitalWrite (compin_dht11, HIGH);
+  delay (1);
+  
+  
+  // Changing the output to an input an waiting for the response of DHT11:
+  pinMode (compin_dht11, INPUT);
+  
+  
+  // DHT11 pushes voltage down after wakeup call:
+  delayMicroseconds (45);
+  
+  
+  // If not, here is the error indicator:
+  if (digitalRead (compin_dht11) != 0) {
+    
+    return (1111);
+    
+  }
+  
+  // After that DHT11 pushes up voltage again:
+  delayMicroseconds (80);
+  
+  // If this is not detected, it also gives an error:
+  if (digitalRead (compin_dht11) != 1) {
+    
+    return (2222);
+    
+  }
+  
+  
+  delayMicroseconds (80);
+  
+  // Now the data transmittion starts:
+  
+  int measure_counter = 0;
+  
+  for (; measure_counter < 5; measure_counter++) {
+    
+    data_out[measure_counter] = measure_run();
+    
+  }
+  
+  // The raw data transfer is finished now, so the compin is again set to output
+  pinMode (compin_dht11, OUTPUT);
+  digitalWrite (compin_dht11, HIGH);
+  
+  // Last but not least the decimal and integral data has to be added:
+  
+  short decimal, integral;
+  
+  if (out_type = 't') {
+    
+    decimal = 3;
+    integral = 2;
+    
+  }
+  
+  if (out_type = 'h') {
+    
+    decimal = 1;
+    integral = 0;
+    
+  }
+  
+  get_out = data_out[decimal];
+  get_out /= 10;
+  get_out += data_out[integral];
+  
+  return (get_out);
+  
+}
