@@ -44,13 +44,13 @@ double dht11::measure (String out_type) {
     for (count = 0; count < 8; count++) {
     
       // Wainting until the next bit comes
-      while (digitalRead(com_pin) != 1);
+      while (digitalRead(_com_pin) != 1);
     
       // Waiting 50us, if its HIGH, it is a 1, if its only 30us long HIGH,
       //  its a 0
       delayMicroseconds (50);
     
-      if (digitalRead(com_pin) == 1) {
+      if (digitalRead(_com_pin) == 1) {
       
         // If its a 1 the bit gets a 1, else it stays a 0
         bitSet (_input_value, 7-count);
