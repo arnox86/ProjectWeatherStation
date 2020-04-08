@@ -4,7 +4,8 @@ Here you can see my project to build a small Arduino Uno based weatherstation wi
 
 The code is written in Arduino C++. The libraries should also be compatible to wiringPi C.
 
-Here a list of the used components:
+In the following a list of the used components:
+  - Arduino Uno
   - DHT11: A pretty accurate temperature an humidity sensor
   - 1608A: A small, but useful LCD display for direct output of the data
   - At least one photoresistor and some other normal resistors
