@@ -1,7 +1,9 @@
 
+
 #define com_pin 14
 
 int data_out[5];
+double output_hum, output_temp;
 
 
 byte measure_run () {
@@ -81,11 +83,27 @@ void loop() {
   for (measure_counter = 0; measure_counter < 5; measure_counter++) {
     
     data_out[measure_counter] = measure_run();
-    Serial.println (data_out[measure_counter]);
+    //Serial.println (data_out[measure_counter]);
     
   }
   
+  for (int y = 0; y < 5; y++) Serial.println (data_out[y]);
+  
+  // Adding of the integral and decimal data:
+  
+  output_hum = data_out[1] / 10;
+  output_hum += data_out[0];
+  
+  output_temp = data_out[3] / 10;
+  output_temp += data_out[2];
+  
+  Serial.println (output_hum);
+  Serial.println (output_temp);
+  
   
   Serial.println ("Got through :)");
+  
+  delay (500);
+  exit (0);
   
 }
