@@ -1,5 +1,4 @@
 
-
 /*
 *    Methods:
 *      - dht11_init (communication pin to dht11)
@@ -11,17 +10,25 @@
 int compin_dht11;
 
 
-void dht11_init (int met_inp) {
+
+
+// Intialisation of the pin:
+
+void dht11_init (int met_inp) {  
   
   compin_dht11 = met_inp;
   
   pinMode (compin_dht11, OUTPUT);
   digitalWrite (compin_dht11, HIGH);
+  delay (100);
   
   return;
   
 }
 
+
+
+// Reading out one 8-bit data pack:
 
 byte measure_run() {
   
@@ -54,13 +61,14 @@ byte measure_run() {
 }
 
 
-double dht11_measure(char out_type){
+
+
+double dht11_measure(String out_type){
   
   
   int data_out[5];
   double get_out;
-  
-  delay (100);
+ 
   
   // Wakeup call for the DHT11:
   
@@ -68,18 +76,20 @@ double dht11_measure(char out_type){
   delay (18);
   
   digitalWrite (compin_dht11, HIGH);
-  delay (1);
+  delayMicroseconds (1);
+  
   
   
   // Changing the output to an input an waiting for the response of DHT11:
+  
   pinMode (compin_dht11, INPUT);
   
-  
   // DHT11 pushes voltage down after wakeup call:
+  
   delayMicroseconds (45);
   
-  
   // If not, here is the error indicator:
+  
   if (digitalRead (compin_dht11) != 0) {
     
     return (1111);
@@ -96,40 +106,45 @@ double dht11_measure(char out_type){
     
   }
   
-  
   delayMicroseconds (80);
+  
+  
   
   // Now the data transmittion starts:
   
-  int measure_counter = 0;
-  
-  for (; measure_counter < 5; measure_counter++) {
+  for (int measure_counter = 0; measure_counter < 5; measure_counter++) {
     
     data_out[measure_counter] = measure_run();
     
   }
   
+  
+  
   // The raw data transfer is finished now, so the compin is again set to output
   pinMode (compin_dht11, OUTPUT);
   digitalWrite (compin_dht11, HIGH);
+  
+  
   
   // Last but not least the decimal and integral data has to be added:
   
   short decimal, integral;
   
-  if (out_type = 't') {
+  if (out_type = "temp") {
     
     decimal = 3;
     integral = 2;
     
   }
   
-  if (out_type = 'h') {
+  if (out_type = "hum") {
     
     decimal = 1;
     integral = 0;
     
   }
+  
+  
   
   get_out = data_out[decimal];
   get_out /= 10;
