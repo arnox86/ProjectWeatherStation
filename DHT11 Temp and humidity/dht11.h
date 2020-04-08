@@ -20,8 +20,6 @@ class dht11 {
     double _output;
   
     byte _measure_run();
-    byte _input_value;
-    int _count;
   
 };
 
