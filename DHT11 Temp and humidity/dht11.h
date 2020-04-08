@@ -16,7 +16,6 @@ class dht11 {
   private:
     int _com_pin;
     int _data_out[5];
-    int _measure_counter;
     double _output;
   
     byte _measure_run();
