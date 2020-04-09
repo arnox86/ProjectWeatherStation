@@ -1,5 +1,19 @@
 /*
+*   Usage:
 *   
+*   #include <dht11.h>
+*
+*   ...
+*
+*   dht11 /choose a name/ (/put here the number of your communication pi connected to the dht11/);
+*
+*   ...
+*
+*   void loop() {
+*       name.measure();
+*       double a = name.temp();     Getting temperature
+*       double b = name.hum();      Getting humidity
+*   }
 */
 
 #ifndef dht11_h
@@ -11,12 +25,16 @@ class dht11 {
   
   public:
     dht11(int pin);
-    double measure(String out_type);
+    int measure();     // int only for debugging
+    double temp();
+    double hum();
   
   private:
+    char _type;
     int _com_pin;
     int _data_out[5];
-    double _output;
+    double _output_temp;
+    double _output_hum;
   
     byte _measure_run();
   
