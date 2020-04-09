@@ -2,7 +2,7 @@
 
 Here you can see my project to build a small Arduino Uno based weatherstation with temperature, humidity and sunlight exposure sensors plus an LCD-Display.
 
-The code is written in Arduino C++. The libraries should also be compatible to wiringPi C.
+The code is written for Arduino.
 
 In the following a list of the used components:
   - Arduino Uno
