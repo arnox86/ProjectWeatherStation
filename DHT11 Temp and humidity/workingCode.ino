@@ -51,9 +51,11 @@ void setup() {
 
 
 void loop() {
-
   
-  delay (500);
+  digitalWrite (com_pin, HIGH);
+  
+  delay (1000);
+  
   // Wakeup call:
  
   digitalWrite (com_pin, LOW);
@@ -103,10 +105,13 @@ void loop() {
     
   }
   
+  delayMicroseconds (70);
+  
   pinMode (com_pin, OUTPUT);
   digitalWrite (com_pin, HIGH);
   
-
+  //for (int a = 0; a < 5; a++) Serial.println(data_out[a]);
+  
   // Adding of the integral and decimal data:
   
   output_hum = data_out[1];
