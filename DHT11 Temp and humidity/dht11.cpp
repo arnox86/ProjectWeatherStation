@@ -89,9 +89,6 @@ int dht11::measure () {
   digitalWrite (_com_pin, HIGH);
 
   delay (500);
-
-
-    for (int xy = 0; xy < 5; xy++) Serial.println (_data_out[xy]);
   
   _output_hum = _data_out[1];
   _output_hum /= 10;
