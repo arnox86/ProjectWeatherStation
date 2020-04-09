@@ -1,3 +1,22 @@
+/*
+*   Usage:
+*   
+*   #include <dht11.h>
+*
+*   ...
+*
+*   dht11 /choose a name/ (/put here the number of your communication pi connected to the dht11/);
+*
+*   ...
+*
+*   void loop() {
+*       name.measure();
+*       double a = name.temp();     Getting temperature
+*       double b = name.hum();      Getting humidity
+*   }
+*/
+
+
 
 #include "Arduino.h"
 #include "dht11.h"
@@ -11,9 +30,9 @@ dht11::dht11 (int pin) {
   
 }
 
-double dht11::measure (String out_type) {
-  
-  delay (50);
+int dht11::measure () {
+
+  delay (1000);
   
   digitalWrite (_com_pin, LOW);
   delay (18);
@@ -25,11 +44,11 @@ double dht11::measure (String out_type) {
   pinMode (_com_pin, INPUT);
   delayMicroseconds (45);
   
-  if (!digitalRead (_com_pin)) return (1111);
+  if (digitalRead (_com_pin)) return (1111);
   
   delayMicroseconds (80);
   
-  if (digitalRead (_com_pin)) return (2222);
+  if (!digitalRead (_com_pin)) return (2222);
   
   delayMicroseconds (80);
   
@@ -56,7 +75,7 @@ double dht11::measure (String out_type) {
         bitSet (_input_value, 7-count);
       
         // Waiting until the transmittion is ready
-        while (digitalRead(com_pin) == 1);
+        while (digitalRead(_com_pin) == 1);
       
       }
     
@@ -65,9 +84,14 @@ double dht11::measure (String out_type) {
     _data_out[_measure_counter] = _input_value;
     
   }
-  
-  double _output_hum;
-  double _output_temp;
+
+  pinMode (_com_pin, OUTPUT);
+  digitalWrite (_com_pin, HIGH);
+
+  delay (500);
+
+
+    for (int xy = 0; xy < 5; xy++) Serial.println (_data_out[xy]);
   
   _output_hum = _data_out[1];
   _output_hum /= 10;
@@ -76,9 +100,17 @@ double dht11::measure (String out_type) {
   _output_temp = _data_out[3];
   _output_temp /= 10;
   _output_temp += _data_out[2];
-  
-  
-  if (out_type = "hum") return (_output_hum);
-  if (out_type = "temp") return (_output_temp);
-  
+
+}
+
+double dht11::temp() {
+
+  return (_output_temp);
+
+}
+
+double dht11::hum() {
+
+  return (_output_hum);
+
 }
