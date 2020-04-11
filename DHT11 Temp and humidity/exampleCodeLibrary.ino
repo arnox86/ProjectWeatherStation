@@ -13,8 +13,16 @@ void setup () {
 
 void loop () {
   
-  Serial.println (DHT11.temp());
-  Serial.println (DHT11.hum());
+  DHT11.measure();      // Doing one measurement
+  
+  Serial.print ("Temperature: ");
+  Serial.print (DHT11.temp(),1);  // Giving out the temperature
+  Serial.println (" C");
+  
+  Serial.print ("Humidity:    ");
+  Serial.print (DHT11.hum(),1);  // Giving out the humidity
+  Serial.println (" %");
+  
   delay (500);
   
   exit (0);
