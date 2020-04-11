@@ -21,6 +21,23 @@
 
 #include "Arduino.h"
 
+  /* Uncomment to get out the checksum */
+//#define DEBUG_MESSAGE
+
+#define DEBUG_BEGIN Serial
+
+// Not really used, but standard in my libs:
+#ifndef DEBUG_MESSAGE
+  #define DEBUG_PRINT (...) { DEBUG_BEGIN.print (__VA_ARGS__); }
+  #define DEBUG_PRINTLN (...) { DEBUG_BEGIN.println (__VA_ARGS); }
+
+#else
+  #define DEBUG_PRINT (...) {}    // Only placeholder if disabled
+  #define DEBUG-PRINTLN (...) {}
+
+#endif
+
+
 class dht11 {
   
   public:
