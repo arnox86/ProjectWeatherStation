@@ -88,6 +88,7 @@ int dht11::measure () {
   pinMode (_com_pin, OUTPUT);
   digitalWrite (_com_pin, HIGH);
 
+  // Waiting half a second so the DHT11 is ready for data transmitton again
   delay (500);
   
   
