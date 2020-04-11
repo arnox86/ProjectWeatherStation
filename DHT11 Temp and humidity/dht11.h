@@ -21,7 +21,7 @@
 
 #include "Arduino.h"
 
-  /* Uncomment to get out the checksum */
+  /* Uncomment to get out some nice stuff for debugging */
 //#define DEBUG_MESSAGE
 
 #define DEBUG_BEGIN Serial
