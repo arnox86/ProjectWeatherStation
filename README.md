@@ -9,6 +9,7 @@ In the following a list of the used components:
   - DHT11: A pretty accurate temperature an humidity sensor
   - 1608A: A small, but useful LCD display for direct output of the data
   - At least one photoresistor and some other normal resistors
+  - 2x SN74HC595N 8 bit shift registers
 
 
 The complete code including the libraries is written by myself.
