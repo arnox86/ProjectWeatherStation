@@ -102,12 +102,18 @@ int dht11::measure () {
 
 double dht11::temp() {
 
+  DEBUG_PRINT ("Checksum: ");
+  DEBUG_PRINTLN (_data_out[4]);
+  
   return (_output_temp);
 
 }
 
 double dht11::hum() {
 
+  DEBUG_PRINT ("Checksum: ");
+  DEBUG_PRINTLN (_data_out[4]);
+  
   return (_output_hum);
 
 }
