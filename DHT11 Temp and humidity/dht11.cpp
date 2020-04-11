@@ -44,11 +44,21 @@ int dht11::measure () {
   pinMode (_com_pin, INPUT);
   delayMicroseconds (45);
   
-  if (digitalRead (_com_pin)) return (1111);
+  if (digitalRead (_com_pin)) {
+    
+    DEBUG_PRINTLN ("First response missed; returning...");
+    return (1111);
+    
+  }
   
   delayMicroseconds (80);
   
-  if (!digitalRead (_com_pin)) return (2222);
+  if (!digitalRead (_com_pin)) {
+    
+    DEBUG_PRINTLN ("Second response missed; returning...");
+    return (2222);
+    
+  }
   
   delayMicroseconds (80);
   
