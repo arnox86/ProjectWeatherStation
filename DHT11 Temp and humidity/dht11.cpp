@@ -64,13 +64,13 @@ int dht11::measure () {
   
   
   byte _input_value;
-  int count;
+  int _count;
   
   for (int _measure_counter = 0; _measure_counter < 5; _measure_counter++) {
     
     _input_value = 0;
     
-    for (count = 0; count < 8; count++) {
+    for (_count = 0; _count < 8; _count++) {
     
       // Wainting until the next bit comes
       while (digitalRead(_com_pin) != 1);
@@ -82,7 +82,7 @@ int dht11::measure () {
       if (digitalRead(_com_pin) == 1) {
       
         // If its a 1 the bit gets a 1, else it stays a 0
-        bitSet (_input_value, 7-count);
+        bitSet (_input_value, 7-_count);
       
         // Waiting until the transmittion is ready
         while (digitalRead(_com_pin) == 1);
