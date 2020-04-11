@@ -33,7 +33,7 @@
 
 #else
   #define DEBUG_PRINT (...) {}    // Only placeholder if disabled
-  #define DEBUG-PRINTLN (...) {}
+  #define DEBUG_PRINTLN (...) {}
 
 #endif
 
