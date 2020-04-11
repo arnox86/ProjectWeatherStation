@@ -90,6 +90,20 @@ int dht11::measure () {
 
   delay (500);
   
+  
+  // Giving out complete data if debug is enabled
+  DEBUG_PRINTLN ("Data 0-3: ");
+  
+  for (int dbg = 0; dbg < 4; dbg++) {
+    
+    DEBUG_PRINTLN (_data_out[dbg]);
+    
+  }
+  
+  DEBUG_PRINTLN ("Checksum: ");
+  DEBUG_PRINTLN (_data_out[4]);
+  
+  
   _output_hum = _data_out[1];
   _output_hum /= 10;
   _output_hum += _data_out[0];
@@ -101,18 +115,12 @@ int dht11::measure () {
 }
 
 double dht11::temp() {
-
-  DEBUG_PRINT ("Checksum: ");
-  DEBUG_PRINTLN (_data_out[4]);
   
   return (_output_temp);
 
 }
 
 double dht11::hum() {
-
-  DEBUG_PRINT ("Checksum: ");
-  DEBUG_PRINTLN (_data_out[4]);
   
   return (_output_hum);
 
