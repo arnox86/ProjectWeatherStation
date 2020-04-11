@@ -1,3 +1,6 @@
+/*
+*   Working code for reading out the DHT11, no libraries needed.
+*/
 
 #define com_pin 14
 
