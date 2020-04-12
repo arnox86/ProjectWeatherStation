@@ -16,7 +16,7 @@ shiftReg::shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, 
   pinMode (_clock_pin, OUTPUT);
   pinMode (_oe_pin, OUTPUT);
   
-  digitalWrite (oe_pin, LOW);
+  digitalWrite (_oe_pin, LOW);
   
 }
 
@@ -50,9 +50,9 @@ shiftReg::shift (int shift_data) {
       
     }
     
-    for (int _trns_cnt 0; _trns_cnt < _register_size; _trns_cnt++) {
+    for (int _trns_cnt = 0; _trns_cnt < _register_size; _trns_cnt++) {
       
-      _data_bit[_trns_cnt] = _data_buffer[_inv_cnt];
+      _data_bit[_trns_cnt] = _data_buffer[_trns_cnt];
       
     }
     
@@ -60,8 +60,8 @@ shiftReg::shift (int shift_data) {
   
   // Communication with shift register
   
-  digitalWrite (oe_pin, HIGH);
-  digitalWrite (oe_pin, LOW);
+  digitalWrite (_oe_pin, HIGH);
+  digitalWrite (_oe_pin, LOW);
   
   for (int _wrt_cnt = 0; _wrt_cnt < _register_size; _wrt_cnt++) {
     
