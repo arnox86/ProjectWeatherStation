@@ -6,6 +6,8 @@
 #include "Arduino.h"
 
 
+#define OUT_TYPE Serial   // Output type
+
 class shiftReg {
   
   public:
@@ -13,12 +15,16 @@ class shiftReg {
     void shift (int shift_data);
   
   private:
-    boolean _data_bit[128];
-    int _data_pin;
+    bool _data_bit[128];   // Storage for binary data
+    bool _dtaa_buffer[128];   // Buffer if MSB is enabled
+  
+    int _data_pin;    
     int _clock_pin;
     int _oe_pin;
     int _register_size;
     bool _MSB;
+  
+    int _shift_data;
   
 }
 
