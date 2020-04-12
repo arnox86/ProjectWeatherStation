@@ -7,6 +7,7 @@
 
 
 #define OUT_TYPE Serial   // Output type
+#define MAX_SIZE 128    // Maximum shift register size
 
 class shiftReg {
   
@@ -15,8 +16,8 @@ class shiftReg {
     void shift (int shift_data);
   
   private:
-    bool _data_bit[128];   // Storage for binary data
-    bool _data_buffer[128];   // Buffer if MSB is enabled
+    bool _data_bit[MAX_SIZE];   // Storage for binary data
+    bool _data_buffer[MAX_SIZE];   // Buffer if MSB is enabled
   
     int _data_pin;    
     int _clock_pin;
