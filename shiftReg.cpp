@@ -73,4 +73,6 @@ shiftReg::shift (int shift_data) {
   
   digitalWrite (_data_pin, LOW);
   
+  return (0);
+  
 }
