@@ -16,7 +16,7 @@ class shiftReg {
   
   private:
     bool _data_bit[128];   // Storage for binary data
-    bool _dtaa_buffer[128];   // Buffer if MSB is enabled
+    bool _data_buffer[128];   // Buffer if MSB is enabled
   
     int _data_pin;    
     int _clock_pin;
