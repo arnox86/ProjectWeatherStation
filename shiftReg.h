@@ -13,7 +13,7 @@ class shiftReg {
   
   public:
     shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, bool MSB = true);
-    void shift (int shift_data);
+    int shift (int shift_data);
   
   private:
     bool _data_bit[MAX_SIZE];   // Storage for binary data
@@ -27,6 +27,6 @@ class shiftReg {
   
     int _shift_data;
   
-}
+};
 
 #endif
