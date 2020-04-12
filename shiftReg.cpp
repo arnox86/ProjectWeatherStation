@@ -3,6 +3,7 @@
 #include "shiftReg.h"
 
 
+// Constructor
 shiftReg::shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, boolean MSB) {
   
   _data_pin = data_pin;
@@ -15,7 +16,10 @@ shiftReg::shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, 
   pinMode (_clock_pin, OUTPUT);
   pinMode (_oe_pin, OUTPUT);
   
+  digitalWrite (oe_pin, LOW);
+  
 }
+
 
 shiftReg::shift (int shift_data) {
   
@@ -37,7 +41,7 @@ shiftReg::shift (int shift_data) {
     
   }
   
-  // Putting into MSB order if enabled
+  // Inverting into MSB order if enabled
   if (_MSB) {
     
     for (int _inv_cnt = 0; _inv_cnt < _register_size; _inv_cnt++) {
@@ -53,5 +57,20 @@ shiftReg::shift (int shift_data) {
     }
     
   }
+  
+  // Communication with shift register
+  
+  digitalWrite (oe_pin, HIGH);
+  digitalWrite (oe_pin, LOW);
+  
+  for (int _wrt_cnt = 0; _wrt_cnt < _register_size; _wrt_cnt++) {
+    
+    digitalWrite (_data_pin, _data_bit[_wrt_cnt]);
+    digitalWrite (_clock_pin, HIGH);
+    digitalWrite (_clock_pin, LOW);
+    
+  }
+  
+  digitalWrite (_data_pin, LOW);
   
 }
