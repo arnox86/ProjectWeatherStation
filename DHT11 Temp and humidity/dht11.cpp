@@ -45,8 +45,7 @@ int dht11::measure () {
   delayMicroseconds (45);
   
   if (digitalRead (_com_pin)) {
-    
-    DEBUG_PRINTLN ("First response missed; returning...");
+
     return (1111);
     
   }
@@ -54,8 +53,7 @@ int dht11::measure () {
   delayMicroseconds (80);
   
   if (!digitalRead (_com_pin)) {
-    
-    DEBUG_PRINTLN ("Second response missed; returning...");
+
     return (2222);
     
   }
@@ -100,19 +98,6 @@ int dht11::measure () {
 
   // Waiting half a second so the DHT11 is ready for data transmitton again
   delay (500);
-  
-  
-  // Giving out complete data if debug is enabled
-  DEBUG_PRINTLN ("Data 0-3: ");
-  
-  for (int dbg = 0; dbg < 4; dbg++) {
-    
-    DEBUG_PRINTLN (_data_out[dbg]);
-    
-  }
-  
-  DEBUG_PRINTLN ("Checksum: ");
-  DEBUG_PRINTLN (_data_out[4]);
   
   
   _output_hum = _data_out[1];
