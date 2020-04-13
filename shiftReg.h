@@ -9,11 +9,14 @@
 #define OUT_TYPE Serial   // Output type
 #define MAX_SIZE 128    // Maximum shift register size
 
+#define SHIFT_REGISTER_INDICATOR    // For usage of 1602A
+
+
 class shiftReg {
   
   public:
     shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, bool MSB = true);
-    int shift (int shift_data);
+    void shift (int shift_data);
   
   private:
     bool _data_bit[MAX_SIZE];   // Storage for binary data
