@@ -17,63 +17,89 @@ shiftReg::shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, 
   pinMode (_oe_pin, OUTPUT);
   
   digitalWrite (_oe_pin, LOW);
+  digitalWrite (_data_pin, LOW);
+  digitalWrite (_clock_pin, LOW);
   
 }
 
 
-void shiftReg::shift (int shift_data) {
+void shiftReg::updateRegister () {
   
-  _shift_data = shift_data;
-  
-  // Converting _shift_data to binary
-  for (int _bit_count = 0; _bit_count < _register_size; _bit_count++) {
+  if (MSB == 1) {
     
-    if (((_shift_data >> (_register_size - (_bit_count + 1))) & 1) != 0) {
-      
-      _data_bit[_bit_count] = 1;
-      
-    }
-    else {
-      
-      _data_bit[_bit_count] = 0;
-      
-    }
+    #define BITFIRST "MSBFIRST"
+    
+  }
+  else {
+    
+    #define BITFIRST "LSBFIRST"
     
   }
   
-  // Inverting into MSB order if enabled
-  if (_MSB) {
+  for (int _upt_cnt = 0; _upt_cnt < _register_size; _upt_cnt++) {
     
-    for (int _inv_cnt = 0; _inv_cnt < _register_size; _inv_cnt++) {
-      
-      _data_buffer[_inv_cnt] = _data_bit[_register_size - (_inv_cnt + 1)];
-      
-    }
-    
-    for (int _trns_cnt = 0; _trns_cnt < _register_size; _trns_cnt++) {
-      
-      _data_bit[_trns_cnt] = _data_buffer[_trns_cnt];
-      
-    }
+    shiftOut (_data_pin, _clock_pin, BITFIRST, _shift_data[_upt_cnt]);
     
   }
   
-  // Communication with shift register
+}
+
+
+void shiftReg::shiftData (byte shift_data[MAX_SIZE]) {
   
-  digitalWrite (_oe_pin, HIGH);
-  digitalWrite (_oe_pin, LOW);
+  if (_MSB = 1) {
   
-  for (int _wrt_cnt = 0; _wrt_cnt < _register_size; _wrt_cnt++) {
+      for (int _inh_cnt = 0; _inh_cnt < _register_size; _inh_cnt++) {
+      
+        _shift_data[_inh_cnt] = shift_data[_inh_cnt];
+      
+      }
+          
+  }
+  else {
     
-    digitalWrite (_data_pin, _data_bit[_wrt_cnt]);
-    digitalWrite (_clock_pin, HIGH);
-    digitalWrite (_clock_pin, LOW);
+      for (int _inh_cnt = 0; _inh_cnt < _register_size; _inh_cnt++) {
+      
+        _shift_data[_inh_cnt] = shift_data[_register_size - _inh_cnt];
+      
+      }
     
   }
   
-  digitalWrite (_data_pin, LOW);
+  updateRegister ();
   
-  digitalWrite (_oe_pin, HIGH);
-  digitalWrite (_oe_pin, LOW);
+}
+
+
+void shiftReg::allOne () {
+  
+  for (int _on_cnt = 0; _on_cnt < _register_size; _on_cnt++) {
+    
+    _shift_data[_on_cnt] = ON;
+    
+  }
+  
+  updateRegister ();
+  
+}
+
+
+void shiftReg::allZero () {
+  
+  for (int _off_cnt = 0; _off_cnt < _register_size; _off_cnt++) {
+    
+    _shift_data[_off_cnt] = OFF;
+    
+  }
+  
+  updateRegister ();
+  
+  
+}
+
+
+byte shiftReg::readOut (int byte_number) {
+  
+  return (_shift_data[byte_number]);
   
 }
