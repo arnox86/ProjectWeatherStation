@@ -4,7 +4,7 @@
 
 
 // Constructor
-shiftReg::shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, boolean MSB) {
+shiftReg::shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, bool MSB) {
   
   _data_pin = data_pin;
   _clock_pin = clock_pin;
@@ -21,7 +21,7 @@ shiftReg::shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, 
 }
 
 
-shiftReg::shift (int shift_data) {
+void shiftReg::shift (int shift_data) {
   
   _shift_data = shift_data;
   
@@ -75,7 +75,5 @@ shiftReg::shift (int shift_data) {
   
   digitalWrite (_oe_pin, HIGH);
   digitalWrite (_oe_pin, LOW);
-  
-  return (0);
   
 }
