@@ -7,7 +7,7 @@
 
 
 #define VAR_SIZE    0x08
-#define OUT_TYPE    Serial   // Output type
+//#define OUT_TYPE    Serial   // Output type
 
 #define ON      0xFF
 #define OFF     0x00
