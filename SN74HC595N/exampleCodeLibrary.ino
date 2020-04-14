@@ -5,6 +5,9 @@
 shiftReg sr (9, 10, 11, 0);   // data pin , clock pin, latch pin, MSB (1) or LSB (0)
 
 void setup () {
+  
+  ;
+  
 }
 
 
