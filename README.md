@@ -10,6 +10,3 @@ In the following a list of the used components:
   - 1608A: A small, but useful LCD display for direct output of the data
   - At least one photoresistor and some other normal resistors
   - SN74HC595N: 8 bit shift register
-
-
-The complete code including the libraries is written by myself.
