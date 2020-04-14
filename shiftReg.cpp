@@ -27,44 +27,23 @@ void shiftReg::updateRegister () {
   
   if (MSB == 1) {
     
-    #define BITFIRST "MSBFIRST"
+    #define __BITFIRST "MSBFIRST"
     
   }
   else {
     
-    #define BITFIRST "LSBFIRST"
+    #define __BITFIRST "LSBFIRST"
     
   }
-  
-  for (int _upt_cnt = 0; _upt_cnt < _register_size; _upt_cnt++) {
     
-    shiftOut (_data_pin, _clock_pin, BITFIRST, _shift_data[_upt_cnt]);
-    
-  }
+  shiftOut (_data_pin, _clock_pin, __BITFIRST, _shift_data);
   
 }
 
 
-void shiftReg::shiftData (byte shift_data[MAX_SIZE]) {
+void shiftReg::shiftData (byte shift_data) {
   
-  if (_MSB = 1) {
-  
-      for (int _inh_cnt = 0; _inh_cnt < _register_size; _inh_cnt++) {
-      
-        _shift_data[_inh_cnt] = shift_data[_inh_cnt];
-      
-      }
-          
-  }
-  else {
-    
-      for (int _inh_cnt = 0; _inh_cnt < _register_size; _inh_cnt++) {
-      
-        _shift_data[_inh_cnt] = shift_data[_register_size - _inh_cnt];
-      
-      }
-    
-  }
+  _shift_data = shift_data;
   
   updateRegister ();
   
@@ -72,12 +51,8 @@ void shiftReg::shiftData (byte shift_data[MAX_SIZE]) {
 
 
 void shiftReg::allOne () {
-  
-  for (int _on_cnt = 0; _on_cnt < _register_size; _on_cnt++) {
     
-    _shift_data[_on_cnt] = ON;
-    
-  }
+  _shift_data = ON;
   
   updateRegister ();
   
@@ -85,12 +60,8 @@ void shiftReg::allOne () {
 
 
 void shiftReg::allZero () {
-  
-  for (int _off_cnt = 0; _off_cnt < _register_size; _off_cnt++) {
     
-    _shift_data[_off_cnt] = OFF;
-    
-  }
+  _shift_data = OFF;
   
   updateRegister ();
   
@@ -98,8 +69,8 @@ void shiftReg::allZero () {
 }
 
 
-byte shiftReg::readOut (int byte_number) {
+byte shiftReg::readOut () {
   
-  return (_shift_data[byte_number]);
+  return (_shift_data);
   
 }
