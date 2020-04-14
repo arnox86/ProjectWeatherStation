@@ -9,7 +9,7 @@
 // Connections to the shift register
 #define data_pin 14   // Data pin
 #define clock_pin 15   // Clock pin
-#define OE_pin    // Output enable
+#define latch_pin    // Storage register clock pin
 
 
 int data = 0xFF;   // Data for the output 
