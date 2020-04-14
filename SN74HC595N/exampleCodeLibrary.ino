@@ -2,7 +2,7 @@
 #include <shiftReg.h>
 
 
-shiftReg reg1 (9, 10, 11, 8, 0);   // data pin , clock pin, output enable pin, size of register, MSB (1) or LSB (0)
+shiftReg sr (9, 10, 11, 0);   // data pin , clock pin, latch pin, MSB (1) or LSB (0)
 
 void setup () {
 }
@@ -10,7 +10,17 @@ void setup () {
 
 void loop () {
   
-  reg1.shift (0xFF);    // Set all outputs 1
+  sr.shiftData (0b10101010);    // Setting an output
+  delay (1);
+  
+  sr.allOne ();   // Sets all output pins to 1
+  delay (1);
+  
+  sr.allZero ();    // Sets all output pins to 0
+  delay (1);
+  
+  uint8_t shiftRegister_value = sr.readOut ();    // Gives out data in the shift register
+  delay (1);
   
   exit (0);
   
