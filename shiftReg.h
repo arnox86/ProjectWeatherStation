@@ -18,7 +18,7 @@
 class shiftReg {
   
   public:
-    shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, bool MSB);
+    shiftReg (uint16_t data_pin, uint16_t clock_pin, uint16_t latch_pin, bool MSB);
     void shiftData (byte shift_data);
     void updateRegister ();
     void allOne ();
@@ -27,10 +27,9 @@ class shiftReg {
     byte readOut ();    // Reading out shift_data
   
   private:
-    int _data_pin;    // Private variables for pins
-    int _clock_pin;
-    int _oe_pin;
-    int _register_size;
+    uint16_t _data_pin;    // Private variables for pins
+    uint16_t _clock_pin;
+    uint16_t _latch_pin;
     bool _MSB;
   
     byte _shift_data;
