@@ -4,19 +4,18 @@
 
 
 // Constructor
-shiftReg::shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, bool MSB) {
+shiftReg::shiftReg (uint16_t data_pin, uint16_t clock_pin, uint16_t latch_pin, bool MSB) {
   
   _data_pin = data_pin;
   _clock_pin = clock_pin;
-  _oe_pin = oe_pin;
-  _register_size = register_size;
+  _latch_pin = latch_pin;
   _MSB = MSB;
   
   pinMode (_data_pin, OUTPUT);
   pinMode (_clock_pin, OUTPUT);
-  pinMode (_oe_pin, OUTPUT);
+  pinMode (_latch_pin, OUTPUT);
   
-  digitalWrite (_oe_pin, LOW);
+  digitalWrite (_latch_pin, LOW);
   digitalWrite (_data_pin, LOW);
   digitalWrite (_clock_pin, LOW);
   
@@ -25,19 +24,23 @@ shiftReg::shiftReg (int data_pin, int clock_pin, int oe_pin, int register_size, 
 
 void shiftReg::updateRegister () {
   
-  if (MSB == 1) {
+  if (_MSB == 1) {
     
-    #define __BITFIRST "MSBFIRST"
+    #define _BITFIRST 'MSBFIRST'
     
   }
   else {
     
-    #define __BITFIRST "LSBFIRST"
+    #define _BITFIRST 'LSBFIRST'
     
   }
     
-  shiftOut (_data_pin, _clock_pin, __BITFIRST, _shift_data);
+  digitalWrite (_latch_pin, LOW);
+
+  shiftOut (_data_pin, _clock_pin, _BITFIRST, _shift_data);
   
+  digitalWrite (_latch_pin, HIGH);
+
 }
 
 
