@@ -1,0 +1,18 @@
+
+shiftReg.h:
+
+  shiftReg /**/ (/data pin/, /clock pin/, /latch pin/, /MSB (1) or LSB (0) first/);    // Constructor
+  
+  .shiftData (/Data/);    // Writing data into register
+  byte .readOut ();    // Reading out data in register
+  .allOne ();     // Sets all outputs 1
+  .allZero ();    // Sets all outputs 0
+  
+  
+dht11.h:
+
+  dht11 /**/ (/communication pin/);   // Constructor
+  
+  .measure ();    // Makes one measurement
+  int .temp ();   // Gives out temperature of last measurement
+  int .hum ();    // Gives out humidity of last measurement
