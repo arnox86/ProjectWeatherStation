@@ -14,5 +14,6 @@ dht11.h:
   dht11 /**/ (/communication pin/);   // Constructor
   
   .measure ();    // Makes one measurement
-  int .temp ();   // Gives out temperature of last measurement
-  int .hum ();    // Gives out humidity of last measurement
+  double .temp ();   // Gives out temperature of last measurement
+  double .hum ();    // Gives out humidity of last measurement
+
