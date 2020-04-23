@@ -24,22 +24,28 @@ shiftReg::shiftReg (uint16_t data_pin, uint16_t clock_pin, uint16_t latch_pin, b
 
 void shiftReg::updateRegister () {
   
-  if (_MSB == 1) {
-    
-    #define _BITFIRST 'MSBFIRST'
-    
+  switch (_MSB) {
+
+    case 1:
+      #define _BITFIRST 'MSBFIRST'
+
+    case 0:
+      #define _BITFIRST 'LSBFIRST'
+
+    default:
+      #define _BITFIRST 'LSBFIRST'
+
   }
-  else {
     
-    #define _BITFIRST 'LSBFIRST'
-    
-  }
-    
+
   digitalWrite (_latch_pin, LOW);
 
   shiftOut (_data_pin, _clock_pin, _BITFIRST, _shift_data);
   
   digitalWrite (_latch_pin, HIGH);
+
+
+  #undef _BITFIRST
 
 }
 
