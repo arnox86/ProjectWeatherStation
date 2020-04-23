@@ -28,12 +28,15 @@ void shiftReg::updateRegister () {
 
     case 1:
       #define _BITFIRST 'MSBFIRST'
+      break;
 
     case 0:
       #define _BITFIRST 'LSBFIRST'
+      break;
 
     default:
       #define _BITFIRST 'LSBFIRST'
+      break;
 
   }
     
