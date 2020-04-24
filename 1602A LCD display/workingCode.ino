@@ -185,7 +185,7 @@ for (int r_cnt = 0; r_cnt < 4; r_cnt++) {
   delay (10);*/
 
 
-  digitalWrite (enable_pin, 1);   // DDRAM adress 02h
+  digitalWrite (enable_pin, 1);   // DDRAM adress 04h
   delayMicroseconds (1);
   sr.shiftData (0b00010000);
   digitalWrite (enable_pin, 0);
@@ -193,22 +193,21 @@ for (int r_cnt = 0; r_cnt < 4; r_cnt++) {
 
   digitalWrite (enable_pin, 1);   
   delayMicroseconds (1);
-  sr.shiftData (0b01000000);
+  sr.shiftData (0b00100000);
   digitalWrite (enable_pin, 0);
   delayMicroseconds (1);
   delay (2);
   sr.allZero();
-  Serial.println ("DDRAM adress 02h");
+  Serial.println ("DDRAM adress 04h");
   delay (10);
 
 
-  
-  delayMicroseconds (1);
-  sr.shiftData (0b11001000);
   delayMicroseconds (1);
   sr.shiftData (0b00001000);
   delayMicroseconds (1);
-  digitalWrite (enable_pin, 1);   // Setting A
+  digitalWrite (enable_pin, 1);   // Setting A to 04h
+  delayMicroseconds (1);
+  sr.shiftData (0b00101000);
   delayMicroseconds (1);
   digitalWrite (enable_pin, 0);
   delayMicroseconds (1);
@@ -216,12 +215,12 @@ for (int r_cnt = 0; r_cnt < 4; r_cnt++) {
   delayMicroseconds (1);
   digitalWrite (enable_pin, 0);
 
-  delayMicroseconds (1);
-  sr.shiftData (0b11001000);
   delayMicroseconds (1);
   sr.shiftData (0b00001000);
   delayMicroseconds (1);
   digitalWrite (enable_pin, 1); 
+  delayMicroseconds (1);
+  sr.shiftData (0b10001000);
   delayMicroseconds (1);
   digitalWrite (enable_pin, 0);
   delayMicroseconds (20);
