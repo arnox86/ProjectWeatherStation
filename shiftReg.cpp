@@ -1,4 +1,3 @@
-
 #include "Arduino.h"
 #include "shiftReg.h"
 
@@ -23,26 +22,19 @@ shiftReg::shiftReg (uint16_t data_pin, uint16_t clock_pin, uint16_t latch_pin, b
 
 
 void shiftReg::updateRegister () {
-  
-  if (_MSB == 1) {
-    
-    uint8_t _buffer;
-    
-    _buffer = _shift_data;
-    
-    for (uint16_t _inv_cnt = 0; _inv_cnt < 8; _inv_cnt++) {
-      
-      if (((_buffer >> _inv_cnt) & 0b00000001) == 1) bitSet (_shift_data, (7 - _inv_cnt));
-      else  ;
-      
-    }
-    
-  }
-  
 
   digitalWrite (_latch_pin, LOW);
 
-  shiftOut (_data_pin, _clock_pin, _BITFIRST, _shift_data);
+  if (_MSB == 1) {
+
+    shiftOut (_data_pin, _clock_pin, LSBFIRST, _shift_data);
+
+  }
+  else {
+
+    shiftOut (_data_pin, _clock_pin, MSBFIRST, _shift_data);
+
+  }
   
   digitalWrite (_latch_pin, HIGH);
 
