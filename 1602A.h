@@ -10,18 +10,23 @@
 #include "shiftReg.h"
 
 
-#ifndef SHIFT_REGISTER_INDICATOR
-  
-  #define SH_REG 0
+#ifndef SH_REG
 
-#else
+  #ifndef SHIFT_REGISTER_INDICATOR
+    #define SH_REG 0
 
-  #define SH_REG 1
+  #else
+    #define SH_REG 1
 
+  #endif
 #endif
 
 
-//#define OUT_TYPE Serial    // Output type
+#ifndef OUT_TYPE
+
+  #define OUT_TYPE Serial    // Output type
+
+#endif
 
 
 class 1602A {
