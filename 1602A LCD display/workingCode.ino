@@ -21,7 +21,7 @@ bool brght_set = 0;    // Indicator if brightness is set
 byte in_data;    // Data thats inside now
 
 
-shiftReg sr (13, 12, 11, 0);
+shiftReg sr (13, 12, 11, 1);
 
 
 
