@@ -25,7 +25,7 @@ void shiftReg::updateRegister () {
 
   digitalWrite (_latch_pin, LOW);
 
-  if (_MSB == 1) {
+  if (_MSB) {
 
     shiftOut (_data_pin, _clock_pin, LSBFIRST, _shift_data);
 
