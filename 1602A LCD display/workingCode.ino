@@ -10,9 +10,6 @@
 #define bright_pin 10    // Pin definitions
 #define enable_pin 9
 
-#define ON = 0xFF
-#define OFF = 0b00000000
-
 #define brightness  150  // Brightness of the display
 
 
@@ -21,56 +18,7 @@ bool brght_set = 0;    // Indicator if brightness is set
 byte in_data;    // Data thats inside now
 
 
-shiftReg sr (13, 12, 11, 1);
-
-
-
-void set (boolean RS, byte data) {
-
-  byte data1 = 0;
-  byte data2 = 0;
-  
-  if (RS == 1) {
-    
-    bitSet (data1, 4);
-    bitSet (data2, 4);
-    
-  }
-  
-  for (int bit_cnt = 0; bit_cnt < 4; bit_cnt++) {
-    
-    if ((data >> (4 + bit_cnt)) == 1) {
-      
-      bitSet (data1, bit_cnt);
-      
-    }
-    
-    if ((data >> bit_cnt) == 1) {
-      
-      bitSet (data2, bit_cnt);
-      
-    }
-    
-  }
-  
-  
-  digitalWrite (enable_pin, HIGH);
-  
-  sr.shiftData (data1);
-  
-  digitalWrite (enable_pin, LOW);
-  
-  delayMicroseconds (1);
-  
-  digitalWrite (enable_pin, HIGH);
-  
-  sr.shiftData (data2);
-  
-  digitalWrite (enable_pin, LOW);
-  
-  delayMicroseconds (1);
-  
-}
+shiftReg sr (13, 11, 12, 1);
 
 
 void setup () {
@@ -94,34 +42,195 @@ void loop () {
     for (int brght_cnt = 0; brght_cnt < brightness; brght_cnt++) {
       
       analogWrite (bright_pin, brght_cnt);
-      delay (50);
+      delay (1);
       
     }
     
     brght_set = 1;
     
   }
-  
-  set (0, 0b00101000);    // Intializing
-  delayMicroseconds (10000);
-  
-  set (0, 0b00001111);    // Cusor on
+
+  digitalWrite (enable_pin, 1);   // Set to 4 bit operation mode
   delayMicroseconds (1);
- 
-  set (0, 0b00010100);    // Cursor right
+  sr.shiftData (0b01000000);
+  digitalWrite (enable_pin, 0);
   delayMicroseconds (1);
+  sr.allZero();
+
+  digitalWrite (enable_pin, 1);   
+  delayMicroseconds (1);
+  sr.shiftData (0b00010000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  delay (2);
+  sr.allZero();
+  Serial.println ("4 bit operation mode set");
   
+
+  digitalWrite (enable_pin, 1);   // Setting cusor on
+  delayMicroseconds (1);
+  sr.shiftData (0b00000000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  sr.allZero();
+
+  digitalWrite (enable_pin, 1);   
+  delayMicroseconds (1);
+  sr.shiftData (0b11110000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  delay (2);
+  sr.allZero();
+  Serial.println ("Cursor on");
+
+  
+  digitalWrite (enable_pin, 1);   // Display off
+  delayMicroseconds (1);
+  sr.shiftData (0b00000000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  sr.allZero();
+
+  digitalWrite (enable_pin, 1);   
+  delayMicroseconds (1);
+  sr.shiftData (0b00010000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  sr.allZero();
+  delay (1000);
+  Serial.println ("Display off");
+
+
+  digitalWrite (enable_pin, 1);   // Display on
+  delayMicroseconds (1);
+  sr.shiftData (0b00000000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  sr.allZero();
+
+  digitalWrite (enable_pin, 1);   
+  delayMicroseconds (1);
+  sr.shiftData (0b11110000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  sr.allZero();
+  delay (1000);
+  Serial.println ("Display on");
+
+
+  digitalWrite (enable_pin, 1);   // Entry mode set
+  sr.shiftData (0b00100000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+
+  digitalWrite (enable_pin, 1);   
+  sr.shiftData (0b01100000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  delay (2);
+  sr.allZero();
+  Serial.println ("Entry mode set");
+
+
+  digitalWrite (enable_pin, 1);   // Return home
+  sr.shiftData (0b00000000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+
+  digitalWrite (enable_pin, 1);   
+  sr.shiftData (0b01000000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  delay (2);
+  sr.allZero();
+  Serial.println ("Return home");
   delay (1000);
   
-  set (0, 0b00010000);    // Cursor left
+
+for (int r_cnt = 0; r_cnt < 4; r_cnt++) {
+  
+  digitalWrite (enable_pin, 1);
   delayMicroseconds (1);
+  sr.shiftData (0b10000000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  sr.allZero();
+
+  digitalWrite (enable_pin, 1);
+  delayMicroseconds (1);
+  sr.shiftData (0b00100000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  sr.allZero();
+  Serial.println ("Cursor right");
+  delay (500);
+
+}
+
+
+  /*digitalWrite (enable_pin, 1);   // CGRAM adress 01h
+  delayMicroseconds (1);
+  sr.shiftData (0b00100000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+
+  digitalWrite (enable_pin, 1);   
+  delayMicroseconds (1);
+  sr.shiftData (0b10000000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  delay (2);
+  sr.allZero();
+  Serial.println ("CGRAM adress 01h");
+  delay (10);*/
+
+
+  digitalWrite (enable_pin, 1);   // DDRAM adress 02h
+  delayMicroseconds (1);
+  sr.shiftData (0b00010000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+
+  digitalWrite (enable_pin, 1);   
+  delayMicroseconds (1);
+  sr.shiftData (0b01000000);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  delay (2);
+  sr.allZero();
+  Serial.println ("DDRAM adress 02h");
+  delay (10);
+
+
   
-  set (1, 0b11111111);
-  delay (10000000);
+  delayMicroseconds (1);
+  sr.shiftData (0b11001000);
+  delayMicroseconds (1);
+  sr.shiftData (0b00001000);
+  delayMicroseconds (1);
+  digitalWrite (enable_pin, 1);   // Setting A
+  delayMicroseconds (1);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (1);
+  sr.shiftData (0b00001000);
+  delayMicroseconds (1);
+  digitalWrite (enable_pin, 0);
+
+  delayMicroseconds (1);
+  sr.shiftData (0b11001000);
+  delayMicroseconds (1);
+  sr.shiftData (0b00001000);
+  delayMicroseconds (1);
+  digitalWrite (enable_pin, 1); 
+  delayMicroseconds (1);
+  digitalWrite (enable_pin, 0);
+  delayMicroseconds (20);
+  Serial.println ("Set 'A'");
   
-  sr.shiftData (0b10101010);
-  delay (10000000);
-  
+
+  sr.allZero();
+
+  delay (100);
   exit (0);
   
 }
