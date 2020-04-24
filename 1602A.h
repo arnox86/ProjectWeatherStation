@@ -14,7 +14,7 @@ class 1602A {
   public:
     
   
-  private
+  private:
     
     
   
