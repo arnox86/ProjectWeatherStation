@@ -27,6 +27,7 @@
 class 1602A {
   
   public:
+  1602A (     );
     
   
   private:
