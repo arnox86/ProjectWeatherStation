@@ -9,8 +9,13 @@
 #define VAR_SIZE    0x08
 //#define OUT_TYPE    Serial   // Output type
 
-#define ON      0xFF
-#define OFF     0x00
+#ifndef ON
+  #define ON      0xFF
+#endif
+
+#ifndef OFF
+  #define OFF     0x00
+#endif
 
 #define SHIFT_REGISTER_INDICATOR    // For usage of 1602A
 
