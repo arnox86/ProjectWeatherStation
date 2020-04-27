@@ -16,4 +16,17 @@ dht11.h:
   .measure ();    // Makes one measurement
   double .temp ();   // Gives out temperature of last measurement
   double .hum ();    // Gives out humidity of last measurement
+  
+  
+1602A.h:
+
+  1602A /**/ (/data pin 0/, /data pin 1/, ... , /data pin 7/, /enable pin/, /rs pin/, /brightness pin/, /brightness (0-255)/,
+              /operation mode (8 or 4 bit bus)/);
+              
+              // Put your assigned pins to the designated position.
+              // If you use the 4 bit operation mode write your 4 data pins into data pin 0 - 4. 
+              // If you are using a shift register, write the shift register pins into the data pin positions.
+              // If you use a shift register with 4 bit bus, you can write your enable and rs pin assignment
+              //   to data pin 4 (enable) and 5 (rs). In this case you have to write a 0 into positions of enable and rs pin.
+              // 
 
