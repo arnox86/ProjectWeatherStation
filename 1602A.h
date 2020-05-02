@@ -35,6 +35,9 @@
   #define OFF 0b00000000    // To be sure ;)
 #endif
 
+#define CLEAR_DISPLAY 0x01
+#define RETURN_HOME 0x02    // Setting DDRAM adress to 0
+
 
 class 1602A {
   
@@ -46,17 +49,25 @@ class 1602A {
            uint8_t operation_mode);
   
     void initShiftRegister (uint16_t data_pin, uint16_t clock_pin, uint16_t latch_pin);
+  
+    void update (uint16_t binput);   // Order of binput bits: 7-0 data; 8 rs;
+  
+    void write (uint16_t x_axis, uint16_t y_axis, uint8_t dec_input);
     
   
   private:
-    uint16_t _dataPin[8];
+    uint16_t _dataPin[10];    // Private variable for data pins
     uint16_t _pbuffer[10];
+    uint16_t _dbuffer[10];   // Random data buffer
     
-    uint8_t _sr_assignment[8];    // Assignment of output and output pins
+    uint16_t _andbuffer;      // Buffer to put bit into right order (.update)
+    
+    uint8_t _sr_assignment[8];    // Assignment of output and output pins at shift register
     uint8_t _sr_output;   // Output byte for shift register
   
     bool _sr_init;    // Indicates if shift register is used, 0 by default
-    bool _8bit_mode;
+    bool _8bit_mode;    // Operation mode: 1 = 8 bit, 0 = 4 bit
+    bool _rs_state    // State of rs pin
     
 }
 
