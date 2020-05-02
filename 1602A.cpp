@@ -118,9 +118,13 @@ void 1602A::update (uint16_t binput) {
       digitalWrite (enablePin, HIGH);   // Setting enable pin to high: indicator for data transmittion
       delayMicroseconds (1);
       
-      digitalWrite (rs_pin, _rs_state);   // 1 if data is written to the ddram
+      digitalWrite (rs_pin, _rs_state);   // 1 if data is written to the DDRAM
       sr_lcd.shiftData (_sr_output);
+      digitalWrite (enablePin, LOW);
       
+      delayMicroseconds (1);    // Setting all to 0
+      sr_lcd.allZero();
+      digitalWrite (rs_pin, LOW);
       delayMicroseconds (1);
     
     }
