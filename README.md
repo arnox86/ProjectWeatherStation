@@ -13,4 +13,4 @@ In the following a list of the used components:
   - At least one photoresistor and some other normal resistors
   - SN74HC595N: 8 bit shift register
   
-In the keyword.txt you can find detailed information about the usage of the libraries and their functions.
+In keyword.txt you can find detailed information about the usage of the libraries and their functions.
