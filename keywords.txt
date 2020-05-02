@@ -23,13 +23,38 @@ dht11.h:
   1602A /**/ (/data pin 0/, /data pin 1/, ... , /data pin 7/, /enable pin/, /rs pin/, /brightness pin/, /brightness (0-255)/,
               /operation mode (8 or 4 bit bus)/);   // Constructor
               
-              // Put your assigned pins to the designated position.
-              // If you use the 4 bit operation mode write your 4 data pins into data pin 0 - 4. 
-              // If you are using a shift register, you have to initialize it by using .initShiftRegister and you have to write              
-              //   the shift register pins into the data pin positions.
-              // If you use a shift register with 4 bit bus, you can write your enable and rs pin assignment
-              //   to data pin 4 (enable) and 5 (rs). In this case you have to write a 0 into positions of enable and rs pin.
+              // You have to put each connection of the LCDs data pins to the Arduino / shift register into the
+              //  assigned position.
+              //
+              //  Example 1: Data pin 3 at the LCD display is connected to pin 12 at the Arduino:
+              //    Write a 12 into position of data pin 3.
+              //  Example 2: Data pin 6 at the LCD display is connected to pin 7 at the shift register:
+              //    Write a 7 into position of data pin 6.
+              //
+              //  In case of using a shift register you have to use .initShiftRegister() after the constructor
+              
+              // If you use the 4 bit operation mode connect pins 4-7 to the Arduino / shift register and write the 
+              //   assignments into data pins 4-7.
+              
+              // If you use a shift register with 4 bit bus, you can use the shift register for rs / enable pin.
+              // Simply put your assignment for rs into position of data bit 0 and for enable pin into position of
+              //  data pin 1.
+              // Also write a 0 into the position of rs and enable pin.
+              //
+              // Example: rs pin connected to pin 4 at the shift register, enable pin is at pin 7, data pin are 0-3:
+              //  1602A LCD (4,7,0,0,0,1,2,3,0,0,13,255,4);
+              //             ~~~             ~~~
+              //  New position of pins      Normal position of rs/enable pins
+              
+              //
               
               
   .initShiftRegister (/data pin/, /clock pin/, /latch pin/);
+              // Put in your pin connections at the Arduino.
+              // This function only has to be used if you are using a shift register.
+              
+  .write (/x-axis/, /y-axis (line 1 or 2)/, /data (binary or decimal)/);
+  
+  (.update (/16 bit data: bits 0-7: data bits; bit 8: rs pin/);)    
+              // Do only use for debugging! All parts have to be initilized.
 
