@@ -53,6 +53,11 @@ dht11.h:
               // Put in your pin connections at the Arduino.
               // This function only has to be used if you are using a shift register.
               
+              
+  .initLCD ();
+              // Initializes the LCD display. Has to be executed once at beginning of a progam.
+              
+              
   .write (/x-axis/, /y-axis (line 1 or 2)/, /data (binary or decimal)/);
   
   (.update (/16 bit data: bits 0-7: data bits; bit 8: rs pin/);)    
