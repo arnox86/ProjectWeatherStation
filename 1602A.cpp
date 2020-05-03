@@ -1,6 +1,7 @@
 /*
 *
 *   Direct data for .update function is in binput; structure: bits 0-7: data bits 0-7; bit 8: rs pin enabled or not;
+*     For activation of rs pin int _rs_state is set to 1.
 *
 *   The program has 4 different operation mode configurations:
 *     # Has to be initialized by using .initShiftRegister():
@@ -138,13 +139,146 @@ void 1602A::update (uint16_t binput) {
   
     if (8bit_mode == 0) {
       
-      if (_dataPin[0] == 0 && rs_pin > 0) {
+      for (uint16_t passcnt = 0; passcnt < 2; passcnt++) {
         
-        pinMode (rs_pin, OUTPUT);
+      if (passcnt == 0) {
+      
+        if (_dataPin[0] == 0 && rs_pin > 0) {
+        
+          pinMode (rs_pin, OUTPUT);
+          _rs_srUse = 0;    // Indicator if shift register is used for rs pin
+        
+        }
+        else if (_dataPin[0] > 0 && rs_pin == 0) {
+        
+          _rs_srUse = 1;
+        
+        }
+        else {
+        
+          OUT_TYPE.println ("rs pin assignment failure");   // Wrong pin assignment at constructor
+          return;
+        
+        }
+      
+        if (_dataPin[1] == 0 && enable_pin > 0) {
+        
+          pinMode (enable_pin, OUTPUT);
+          _enable_srUse = 0;
+        
+        }
+        else if (_dataPin[1] > 0 && enable_pin == 0) {
+        
+          _enable_srUse = 1;
+        
+        }
+        else {
+        
+          OUT_TYPE.println ("enable pin assignment failure");   // Wrong pin assignment at constructor
+          return;
+          
+        }
+      
+     
+        for (uint16_t assntcnt = 0; assntcnt < 8; assntcnt++) {   // Putting right pin order into _sr_assignment
+      
+          _dbuffer[0] = _dataPin[assntcnt];
+        
+          _sr_assignment[_dbuffer[0]] = _dataPin[assntcnt];
+      
+        }
+      
+        for (uint16_t bscnt = 4; bscnt < 8; bscnt++) {
+        
+          _andbuffer = 0;
+          bitSet (_andbuffer, bscnt);
+        
+          if ((binput & _andbuffer) != 0) {
+          
+            bitSet (_sr_output, 7 - _sr_assignment[bscnt]);
+          
+          }
+        
+        }
+      
+        if (_rs_state == 1 && _rs_srUse == 1) {
+        
+          bitSet (_sr_output, 7 - _sr_assignment[0]);
+        
+        }
+        
+      }
+        
+      if (passcnt == 1) {   // Second pass => data bits 3 - 0
+        
+        for (uint16_t bscnt = 0; bscnt < 4; bscnt++) {
+        
+          _andbuffer = 0;
+          bitSet (_andbuffer, bscnt);
+        
+          if ((binput & _andbuffer) != 0) {
+          
+            bitSet (_sr_output, 7 - _sr_assignment[bscnt + 4]);
+          
+          }
+          
+        }
+        
+        if (_rs_state == 1 && _rs_srUse == 1) {
+        
+          bitSet (_sr_output, 7 - _sr_assignment[0]);
+        
+        }
         
       }
       
+      
+      sr_lcd.allZero();
+      
+      _andbuffer = 0;
+      
+      if (_enable_srUse == 1) {
+        
+        bitSet (_andbuffer, 7 - _sr_assignment[1]);   // For only setting enable pin
+        bitSet (_sr_output, 7 - _sr_assignment[1]);
+        
+        sr_lcd.shiftData (_andbuffer);
+        
+      }
+      else {
+        
+        digitalWrite (enable_pin, HIGH);
+        
+      }
+      
+      delayMicroseconds (1);
+      
+      if (_rs_srUse == 0) {
+        
+        digitalWrite (rs_pin, _rs_state);
+        
+      }
+      
+      sr_lcd.shiftData (_sr_output);
+      
+      if (_enable_srUse == 0) {
+        
+        digitalWrite (enable_pin, LOW);
+        
+      }
+      if (_rs_srUse == 0) {
+        
+        digitalWrite (rs_pin, LOW);
+        
+      }
+      
+      delayMicroseconds (1);
+      
+      sr_lcd.allZero();
+      
     }
+      
+    }   // passcnt
     
   }
   
