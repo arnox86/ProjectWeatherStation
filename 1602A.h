@@ -37,6 +37,12 @@
 
 #define CLEAR_DISPLAY 0x01
 #define RETURN_HOME 0x02    // Setting DDRAM adress to 0
+#define ENTRY_MODE 0x04   // Cursor and display shift
+#define DISPLAY_STATE 0x08    // Display on or off
+#define CURSOR_STATE 0x10   // Cursor settings without influencing DDRAM
+#define FUNCTION_SET 0x20   // Intializing line and data bus mode
+#define CGRAM_SET 0x40    // Setiing CGRAM adress
+#define DDRAM_SET 0x80    // Setting DDRAM adress
 
 
 class 1602A {
@@ -49,6 +55,8 @@ class 1602A {
            uint8_t operation_mode);
   
     void initShiftRegister (uint16_t data_pin, uint16_t clock_pin, uint16_t latch_pin);
+  
+    void initLCD ();
   
     void update (uint16_t binput);   // Order of binput bits: 7-0 data; 8 rs;
   
