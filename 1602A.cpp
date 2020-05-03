@@ -67,6 +67,13 @@ void 1602A::initShiftRegister (uint16_t data_pin, uint16_t clock_pin, uint16_t l
 }
 
 
+void 1602A::initLCD () {
+  
+  
+  
+}
+
+
 void 1602A::update (uint16_t binput) {
   
   
@@ -129,7 +136,15 @@ void 1602A::update (uint16_t binput) {
     
     }
   
-    
+    if (8bit_mode == 0) {
+      
+      if (_dataPin[0] == 0 && rs_pin > 0) {
+        
+        pinMode (rs_pin, OUTPUT);
+        
+      }
+      
+    }
     
   }
   
