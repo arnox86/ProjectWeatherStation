@@ -32,7 +32,7 @@
 #endif
 
 #ifndef OFF
-  #define OFF 0b00000000    // To be sure ;)
+  #define OFF 0b00000000    // Just to be sure ;)
 #endif
 
 #define CLEAR_DISPLAY 0x01
@@ -75,7 +75,9 @@ class 1602A {
   
     bool _sr_init;    // Indicates if shift register is used, 0 by default
     bool _8bit_mode;    // Operation mode: 1 = 8 bit, 0 = 4 bit
-    bool _rs_state    // State of rs pin
+    bool _rs_state;    // State of rs pin
+    bool _rs_srUse;   // Indicates usage of shift register for rs pin
+    bool _enable_srUse;   // Same with enable pin
     
 }
 
