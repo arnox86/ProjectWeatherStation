@@ -2,7 +2,7 @@
 *
 *   Direct data for .update function is in binput; structure: bits 0-7: data bits 0-7; bit 8: rs pin enabled or not;
 *
-*   The program has 4 diffrent operation mode configurations:
+*   The program has 4 different operation mode configurations:
 *     # Has to be initialized by using .initShiftRegister():
 *       - shift register in 8 bit mode: rs and enable pins have to be seperate
 *       - shift register in 4 bit mode
