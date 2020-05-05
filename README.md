@@ -2,7 +2,7 @@
 
 Here you can see my project to build a small Arduino Uno based weather station with temperature, humidity and sunlight exposure sensors plus an LCD-Display.
 
-1602A.h is not ready yet.
+1602A.h is not ready yet, especially the 1602A library has to be developed.
 
 The code is written for Arduino.
 
