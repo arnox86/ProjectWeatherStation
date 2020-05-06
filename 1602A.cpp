@@ -282,6 +282,79 @@ void 1602A::update (uint16_t binput) {
     
   }
   
+  
+  if (_sr_init == 0) {    // If no shift register is used
+    
+    for (uint16_t outsetcnt = 0; outsetcnt < 8; outsetcnt++) {
+      
+      pinMode (_dataPin[outstecnt], OUTPUT);
+      
+    }
+    
+    pinMode (enable_pin, OUTPUT);
+    pinMode (rs_pin, OUTPUT);
+    
+    
+    if (_8bit_mode == 1) {
+
+      digitalWrite (enable_pin, HIGH);
+      delayMicroseconds (1);
+      
+      _andbuffer = 0;
+      bitSet (_andbuffer, 8);
+      
+      if ((_binput & _andbuffer) == 1) {
+        
+        digitalWrite (rs_pin, HIGH);
+        
+      }
+      else {
+        
+        digitalWrite (rs_pin, LOW);
+        
+      }
+      
+      for (uint16_t andcnt = 0; andcnt < 8; andcnt++) {
+        
+        _andbuffer = 0;
+        
+        bitSet (_andbuffer, andcnt);    // Setting bit to read out binary input
+        
+        if ((_andbuffer & _binput) == 1) {
+          
+          digitalWrite (_dataPin[7 - andcnt], HIGH);    // Writing data onto pins
+          
+        }
+        else {
+          
+          digitalWrite (_dataPin[7 - andcnt], LOW);
+          
+        }
+        
+      }
+      
+      digitalWrite (enable_pin, LOW);
+      delayMicroseconds (1);
+      
+      for (uint16_t offcnt = 0; offcnt < 8; offcnt++) {
+        
+        digitalWrite (_dataPin[offcnt], LOW);   // Setting all pins to 0
+        
+      }
+      
+      digitalWrite (rs_pin, LOW);
+      
+    }
+    
+    
+    if (_8bit_mode == 0) {
+      
+      
+      
+    }
+    
+  }
+  
 }
 
 
