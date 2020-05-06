@@ -285,17 +285,17 @@ void 1602A::update (uint16_t binput) {
   
   if (_sr_init == 0) {    // If no shift register is used
     
-    for (uint16_t outsetcnt = 0; outsetcnt < 8; outsetcnt++) {
-      
-      pinMode (_dataPin[outstecnt], OUTPUT);
-      
-    }
-    
     pinMode (enable_pin, OUTPUT);
     pinMode (rs_pin, OUTPUT);
     
     
     if (_8bit_mode == 1) {
+      
+      for (uint16_t outsetcnt = 0; outsetcnt < 8; outsetcnt++) {
+      
+        pinMode (_dataPin[outstecnt], OUTPUT);
+      
+      }
 
       digitalWrite (enable_pin, HIGH);
       delayMicroseconds (1);
@@ -303,7 +303,7 @@ void 1602A::update (uint16_t binput) {
       _andbuffer = 0;
       bitSet (_andbuffer, 8);
       
-      if ((_binput & _andbuffer) == 1) {
+      if ((_binput & _andbuffer) != 0) {
         
         digitalWrite (rs_pin, HIGH);
         
@@ -320,7 +320,7 @@ void 1602A::update (uint16_t binput) {
         
         bitSet (_andbuffer, andcnt);    // Setting bit to read out binary input
         
-        if ((_andbuffer & _binput) == 1) {
+        if ((_andbuffer & _binput) != 0) {
           
           digitalWrite (_dataPin[7 - andcnt], HIGH);    // Writing data onto pins
           
@@ -333,8 +333,8 @@ void 1602A::update (uint16_t binput) {
         
       }
       
-      digitalWrite (enable_pin, LOW);
       delayMicroseconds (1);
+      digitalWrite (enable_pin, LOW);
       
       for (uint16_t offcnt = 0; offcnt < 8; offcnt++) {
         
@@ -349,7 +349,70 @@ void 1602A::update (uint16_t binput) {
     
     if (_8bit_mode == 0) {
       
+      for (uint16_t outcnt = 4; outcnt < 8; outcnt++) {
+        
+        pinMode (_dataPin[outcnt], OUTPUT);
+        
+      }
       
+      _andbuffer = 0;
+      
+      for (uint16_t passcnt = 0; passcnt < 2; passcnt++) {
+      
+        if (passcnt == 0) {
+          
+          for (uint16_t lowcnt = 0; lowcnt < 8; lowcnt++) {
+            
+            digitalWrite (_dataPin, LOW);
+            
+          }
+        
+          digitalWrite (enable_pin, HIGH);
+          delayMicroseconds (1);
+          
+          _andbuffer = 0; 
+          bitSet (_andbuffer, 8);
+          
+          if ((_andbuffer & _binput) != 0) {
+            
+            digitalWrite (rs_pin, HIGH);
+            
+          }
+          
+          for (uint16_t andcnt = 4; andcnt < 8; andcnt++) {
+        
+            _andbuffer = 0;
+        
+            bitSet (_andbuffer, andcnt);
+            
+            if ((_andbuffer & _binput) != 0) {
+              
+              digitalWrite (_dataPin[andcnt], HIGH);
+              
+            }
+                  
+          }
+          
+          delayMicroseconds (1);
+          
+          digitalWrite (enable_pin, LOW);
+          digitalWrite (rs_pin, LOW);
+          
+          for (uint16_t lowcnt = 0; lowcnt < 8; lowcnt++) {
+            
+            digitalWrite (_dataPin, LOW);
+            
+          }
+        
+        }
+        
+        if (passcnt == 1) {
+          
+          
+          
+        }
+                  
+      }
       
     }
     
