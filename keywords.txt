@@ -46,8 +46,6 @@ dht11.h:
               //             ~~~             ~~~
               //  New position of pins      Normal position of rs/enable pins
               
-              //
-              
               
   .initShiftRegister (/data pin/, /clock pin/, /latch pin/);
               // Put in your pin connections at the Arduino.
