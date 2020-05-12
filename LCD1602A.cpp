@@ -20,28 +20,31 @@
 #include "shiftReg.h"
 
 
-LCD1602A::LCD1602A (pin_input[0], pin_input[1], pin_input[2], pin_input[3], pin_input[4], pin_input[5], pin_input[6], pin_input[7], 
-              uint16_t enable_pin, uint16_t rs_pin, uint16_t bright_pin, uint16_t brightness, 
-              uint8_t operation_mode) {
+LCD1602A::LCD1602A (uint16_t pin0,uint16_t pin1, uint16_t pin2, uint16_t pin3, uint16_t pin4, uint16_t pin5 uint16_t pin6, 
+                    uint16_t pin7,uint16_t enable_pin, uint16_t rs_pin, uint16_t bright_pin, uint16_t brightness, 
+                    uint8_t operation_mode) {
   
   _sr_init = 0;   // 0 by default
   
-  for (uint8_t _piv = 0; _piv < 8; _piv++) {
-    
-    _dataPin[_piv] = pin_input[_piv];   // Putting data pins to private variables
-    
-  }
+  pin0 = _dataPin[0];
+  pin1 = _dataPin[1];
+  pin2 = _dataPin[2];
+  pin3 = _dataPin[3];
+  pin4 = _dataPin[4];
+  pin5 = _dataPin[5];
+  pin6 = _dataPin[6];
+  pin7 = _dataPin[7];
   
   pinMode (bright_pin, OUTPUT);
   
   for (uint8_t brtcnt = 0; brtcnt < brightness; brtcnt++) {
     
-    analogWrite (bright_pin, brtcnt);   // Slowly increasing brightness
+    analogWrite (bright_pin, brtcnt);   // Slowly increase brightness
     delay (1);
     
   }
   
-  analogWrite (bright_pin, brightness);   // Setting brightness to final value
+  analogWrite (bright_pin, brightness);   // Set brightness to final value
   
   if (operation_mode == 8) _8bit_mode = 1;
   else if (operation_mode == 4) _8bit_mode = 0;   // Operation mode indication for following program
@@ -60,7 +63,7 @@ void LCD1602A::initShiftRegister (uint16_t data_pin, uint16_t clock_pin, uint16_
   
   shiftReg sr_lcd (data_pin, clock_pin, latch_pin, 1);    // 1 for MSB first
   
-  sr_lcd.allZero();   // Setting all pins to 0 to prevent from overheat
+  sr_lcd.allZero();   // Set all pins to 0 to prevent from overheat
   
   _sr_init = 1;   // Shift register is used
   
@@ -81,12 +84,12 @@ void LCD1602A::update (uint16_t binput) {
   if (_sr_init == 1) {    
     
     
-    _sr_output = OFF;   // Setting output to 0 to prevent errors
+    _sr_output = OFF;   // Set output to 0 to prevent errors
     
     
     if (_8bit_mode == 1) {    // 8 bit operation mode
     
-      for (uint16_t assntcnt = 0; assntcnt < 8; assntcnt++) {   // Putting right pin order into _sr_assignment
+      for (uint16_t assntcnt = 0; assntcnt < 8; assntcnt++) {   // Put right pin order into _sr_assignment
       
         _dbuffer[0] = _dataPin[assntcnt];
         
@@ -94,11 +97,11 @@ void LCD1602A::update (uint16_t binput) {
       
       }
     
-      for (uint16_t bscnt = 0; bscnt < 8; bscnt++) {  // Setting data into shift register byte
+      for (uint16_t bscnt = 0; bscnt < 8; bscnt++) {  // Set data into shift register byte
       
         _andbuffer = 0;
       
-        bitSet (_andbuffer, bscnt);   // Setting bit to read to 1
+        bitSet (_andbuffer, bscnt);   // Set bit to read to 1
       
         if ((binput & _andbuffer) != 0) {
         
@@ -119,18 +122,18 @@ void LCD1602A::update (uint16_t binput) {
       }
       
     
-      pinMode (enablePin, OUTPUT);    // Setting pins to output, shift register can not be used
+      pinMode (enablePin, OUTPUT);    // Set pins to output, shift register can not be used
       pinMode (rs_pin, OUTPUT);
     
-      sr_lcd.allZero();   // Setting shift register to 0
-      digitalWrite (enablePin, HIGH);   // Setting enable pin to high: indicator for data transmittion
+      sr_lcd.allZero();   // Set shift register to 0
+      digitalWrite (enablePin, HIGH);   // Set enable pin to high: indicator for data transmittion
       delayMicroseconds (1);
       
       digitalWrite (rs_pin, _rs_state);   // 1 if data is written to the DDRAM
       sr_lcd.shiftData (_sr_output);
       digitalWrite (enablePin, LOW);
       
-      delayMicroseconds (1);    // Setting all to 0
+      delayMicroseconds (1);    // Set all to 0
       sr_lcd.allZero();
       digitalWrite (rs_pin, LOW);
       delayMicroseconds (1);
@@ -180,7 +183,7 @@ void LCD1602A::update (uint16_t binput) {
         }
       
      
-        for (uint16_t assntcnt = 0; assntcnt < 8; assntcnt++) {   // Putting right pin order into _sr_assignment
+        for (uint16_t assntcnt = 0; assntcnt < 8; assntcnt++) {   // Put right pin order into _sr_assignment
       
           _dbuffer[0] = _dataPin[assntcnt];
         
@@ -239,7 +242,7 @@ void LCD1602A::update (uint16_t binput) {
       
       if (_enable_srUse == 1) {
         
-        bitSet (_andbuffer, 7 - _sr_assignment[1]);   // For only setting enable pin
+        bitSet (_andbuffer, 7 - _sr_assignment[1]);   // For only set enable pin
         bitSet (_sr_output, 7 - _sr_assignment[1]);
         
         sr_lcd.shiftData (_andbuffer);
@@ -318,11 +321,11 @@ void LCD1602A::update (uint16_t binput) {
         
         _andbuffer = 0;
         
-        bitSet (_andbuffer, andcnt);    // Setting bit to read out binary input
+        bitSet (_andbuffer, andcnt);    // Set bit to read out binary input
         
         if ((_andbuffer & _binput) != 0) {
           
-          digitalWrite (_dataPin[7 - andcnt], HIGH);    // Writing data onto pins
+          digitalWrite (_dataPin[7 - andcnt], HIGH);    // Write data onto pins
           
         }
         else {
@@ -338,7 +341,7 @@ void LCD1602A::update (uint16_t binput) {
       
       for (uint16_t offcnt = 0; offcnt < 8; offcnt++) {
         
-        digitalWrite (_dataPin[offcnt], LOW);   // Setting all pins to 0
+        digitalWrite (_dataPin[offcnt], LOW);   // Set all pins to 0
         
       }
       
