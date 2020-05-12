@@ -1,3 +1,5 @@
+# Work in progress...
+
 # Project weather station with Arduino Uno
 
 Here you can see my project to build a small Arduino Uno based weather station with temperature, humidity and sunlight exposure sensors plus an LCD-Display.
