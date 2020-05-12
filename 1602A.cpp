@@ -408,7 +408,48 @@ void 1602A::update (uint16_t binput) {
         
         if (passcnt == 1) {
           
+          for (uint16_t lowcnt = 0, lowcnt < 8; lowcnt++) {
+            
+            digitalWrite (_dataPin[lowcnt], LOW);
+            
+          }
           
+          digitalWrite (enable_pin, HIGH);
+          delayMicroseconds (1);
+          
+          _andbuffer = 0; 
+          bitSet (_andbuffer, 8);
+          
+          if ((_andbuffer & _binput) != 0) {
+            
+            digitalWrite (rs_pin, HIGH);
+            
+          }
+          
+          for (uint16_t andcnt = 0; andcnt < 4; andcnt++) {
+        
+            _andbuffer = 0;
+        
+            bitSet (_andbuffer, andcnt);
+            
+            if ((_andbuffer & _binput) != 0) {
+              
+              digitalWrite (_dataPin[andcnt], HIGH);
+              
+            }
+                  
+          }
+          
+          delayMicroseconds (1);
+          
+          digitalWrite (enable_pin, LOW);
+          digitalWrite (rs_pin, LOW);
+          
+          for (uint16_t lowcnt = 0; lowcnt < 8; lowcnt++) {
+            
+            digitalWrite (_dataPin, LOW);
+            
+          }
           
         }
                   
