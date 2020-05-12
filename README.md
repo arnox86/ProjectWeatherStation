@@ -1,7 +1,7 @@
 # Work in progress...
 
 
-1602A.h is not ready yet.
+1602A.h/.cpp is not ready yet.
 
 # Project weather station with Arduino Uno
 
