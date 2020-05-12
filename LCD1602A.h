@@ -50,7 +50,8 @@ class LCD1602A {
   public:
     uint16_t pin_input[8];
   
-    LCD1602A (pin_input[0], pin_input[1], pin_input[2], pin_input[3], pin_input[4], pin_input[5], pin_input[6], pin_input[7], uint16_t enable_pin, uint16_t rs_pin, uint16_t bright_pin, uint16_t brightness, uint8_t operation_mode);
+    LCD1602A (uint16_t pin1, uint16_t pin2, uint16_t pin3, uint16_t pin4, uint16_t pin5 uint16_t pin6, uint16_t pin7, 
+              uint16_t enable_pin, uint16_t rs_pin, uint16_t bright_pin, uint16_t brightness, uint8_t operation_mode);
   
     void initShiftRegister (uint16_t data_pin, uint16_t clock_pin, uint16_t latch_pin);
   
