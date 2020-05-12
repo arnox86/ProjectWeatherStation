@@ -29,7 +29,7 @@ class shiftReg {
     void allOne ();
     void allZero ();
   
-    byte readOut ();    // Reading out shift_data
+    byte readOut ();    // Read out shift_data
   
   private:
     uint16_t _data_pin;    // Private variables for pins
