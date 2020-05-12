@@ -3,8 +3,8 @@
 */
 
 
-#ifndef 1602A_h
-#define 1602A_h
+#ifndef LCD1602A_h
+#define LCD1602A_h
 
 #include "Arduino.h"
 #include "shiftReg.h"
@@ -45,14 +45,12 @@
 #define DDRAM_SET 0x80    // Setting DDRAM adress
 
 
-class 1602A {
+class LCD1602A {
   
   public:
     uint16_t pin_input[8];
   
-    1602A (pin_input[0], pin_input[1], pin_input[2], pin_input[3], pin_input[4], pin_input[5], pin_input[6], pin_input[7], 
-           uint16_t enable_pin, uint16_t rs_pin, uint16_t bright_pin, uint16_t brightness, 
-           uint8_t operation_mode);
+    LCD1602A (pin_input[0], pin_input[1], pin_input[2], pin_input[3], pin_input[4], pin_input[5], pin_input[6], pin_input[7], uint16_t enable_pin, uint16_t rs_pin, uint16_t bright_pin, uint16_t brightness, uint8_t operation_mode);
   
     void initShiftRegister (uint16_t data_pin, uint16_t clock_pin, uint16_t latch_pin);
   
@@ -79,7 +77,7 @@ class 1602A {
     bool _rs_srUse;   // Indicates usage of shift register for rs pin
     bool _enable_srUse;   // Same with enable pin
     
-}
+};
 
 
 #endif
