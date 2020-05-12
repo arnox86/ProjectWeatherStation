@@ -15,12 +15,12 @@
 
 
 #include "Arduino.h"
-#include "1602A.h"
+#include "LCD1602A.h"
 
 #include "shiftReg.h"
 
 
-1602A::1602A (pin_input[0], pin_input[1], pin_input[2], pin_input[3], pin_input[4], pin_input[5], pin_input[6], pin_input[7], 
+LCD1602A::LCD1602A (pin_input[0], pin_input[1], pin_input[2], pin_input[3], pin_input[4], pin_input[5], pin_input[6], pin_input[7], 
               uint16_t enable_pin, uint16_t rs_pin, uint16_t bright_pin, uint16_t brightness, 
               uint8_t operation_mode) {
   
@@ -56,7 +56,7 @@
 }
 
 
-void 1602A::initShiftRegister (uint16_t data_pin, uint16_t clock_pin, uint16_t latch_pin) {
+void LCD1602A::initShiftRegister (uint16_t data_pin, uint16_t clock_pin, uint16_t latch_pin) {
   
   shiftReg sr_lcd (data_pin, clock_pin, latch_pin, 1);    // 1 for MSB first
   
@@ -68,14 +68,14 @@ void 1602A::initShiftRegister (uint16_t data_pin, uint16_t clock_pin, uint16_t l
 }
 
 
-void 1602A::initLCD () {
+void LCD1602A::initLCD () {
   
   
   
 }
 
 
-void 1602A::update (uint16_t binput) {
+void LCD1602A::update (uint16_t binput) {
   
   
   if (_sr_init == 1) {    
@@ -462,10 +462,9 @@ void 1602A::update (uint16_t binput) {
 }
 
 
-void 1602A::write (uint16_t x_axis, uint16_t y_axis, uint8_t b_input) {
+void LCD1602A::write (uint16_t x_axis, uint16_t y_axis, uint8_t b_input) {
   
   // IMPLEMENTATION OF AXIS (ram)
   
   
 }
-
