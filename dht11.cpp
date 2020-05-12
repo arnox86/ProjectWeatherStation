@@ -12,8 +12,8 @@
 *
 *   void loop() {
 *       name.measure();
-*       double a = name.temp();     Getting temperature
-*       double b = name.hum();      Getting humidity
+*       double a = name.temp();     Get temperature
+*       double b = name.hum();      Get humidity
 *   }
 */
 
@@ -71,10 +71,10 @@ int dht11::measure () {
     
     for (_count = 0; _count < 8; _count++) {
     
-      // Wainting until the next bit comes
+      // Wait until the next bit comes
       while (digitalRead(_com_pin) != 1);
     
-      // Waiting 50us, if its HIGH, it is a 1, if its only 30us long HIGH,
+      // Wait 50us, if its HIGH, it is a 1, if its only 30us long HIGH,
       //  its a 0
       delayMicroseconds (50);
     
@@ -83,7 +83,7 @@ int dht11::measure () {
         // If its a 1 the bit gets a 1, else it stays a 0
         bitSet (_input_value, 7-_count);
       
-        // Waiting until the transmittion is ready
+        // Wait until the transmittion is ready
         while (digitalRead(_com_pin) == 1);
       
       }
@@ -97,7 +97,7 @@ int dht11::measure () {
   pinMode (_com_pin, OUTPUT);
   digitalWrite (_com_pin, HIGH);
 
-  // Waiting half a second so the DHT11 is ready for data transmitton again
+  // Wait half a second so the DHT11 is ready for data transmitton again
   delay (500);
   
   
