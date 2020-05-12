@@ -12,8 +12,8 @@
 *
 *   void loop() {
 *       name.measure();
-*       double a = name.temp();     // Getting temperature
-*       double b = name.hum();      // Getting humidity
+*       double a = name.temp();     // Get temperature
+*       double b = name.hum();      // Get humidity
 *   }
 */
 
