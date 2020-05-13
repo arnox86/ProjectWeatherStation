@@ -1,5 +1,7 @@
 /*
 *
+*       Work in progress...
+*
 *   Direct data for .update function is in binput; structure: bits 0-7: data bits 0-7; bit 8: rs pin enabled or not;
 *     For activation of rs pin int _rs_state is set to 1.
 *
