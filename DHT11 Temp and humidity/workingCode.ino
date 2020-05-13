@@ -8,7 +8,7 @@ int data_out[5];
 double output_hum, output_temp;
 
 
-// Reading out one 8-bit data pack
+// Read out one 8-bit data pack
 
 byte measure_run () {
   
@@ -17,10 +17,10 @@ byte measure_run () {
   
   for (count = 0; count < 8; count++) {
     
-    // Wainting until the next bit comes
+    // Wait until the next bit comes
     while (digitalRead(com_pin) != 1);
     
-    // Waiting 50us, if its HIGH, it is a 1, if its only 30us long HIGH,
+    // Wait 50us, if its HIGH, it is a 1, if its only 30us long HIGH,
     //  its a 0
     delayMicroseconds (50);
     
@@ -29,7 +29,7 @@ byte measure_run () {
       // If its a 1 the bit gets a 1, else it stays a 0
       bitSet (input_value, 7-count);
       
-      // Waiting until the transmittion is ready
+      // Wait until the transmittion is ready
       while (digitalRead(com_pin) == 1);
       
     }
@@ -98,7 +98,7 @@ void loop() {
   
   // DHT11 start with the data transmittion
   
-  // Reading out the sensor data:
+  // Read out the sensor data:
   
   int measure_counter;
   
@@ -115,7 +115,7 @@ void loop() {
   
   //for (int a = 0; a < 5; a++) Serial.println(data_out[a]);
   
-  // Adding of the integral and decimal data:
+  // Add integral and decimal data:
   
   output_hum = data_out[1];
   output_hum /= 10;
