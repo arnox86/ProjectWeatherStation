@@ -30,7 +30,7 @@ void loop() {
 
   boolean _data_bit[data_size];
 
-  for (; data > 0; data--) {    // Counting the data down
+  for (; data > 0; data--) {    // Count the data down
 
     
 
