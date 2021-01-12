@@ -31,7 +31,7 @@ dht11.h:
               //  Example 2: Data pin 6 at the LCD display is connected to pin 7 at the shift register:
               //    Write a 7 into position of data pin 6.
               //
-              //  In case of using a shift register you have to use .initShiftRegister() after the constructor
+              //  In case of using a shift register you have to use .initShiftRegister() after the constructor (see below)
               
               // If you use the 4 bit operation mode connect pins 4-7 to the Arduino / shift register and write the 
               //   assignments into data pins 4-7.
