@@ -33,7 +33,7 @@ SOFTWARE.
 *
 *   ...
 *
-*   dht11 /choose a name/ (/put here the number of your communication pi connected to the dht11/);
+*   dht11 /choose a name/ (/put here the number of your communication pin connected to the dht11/);
 *
 *   ...
 *
