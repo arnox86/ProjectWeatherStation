@@ -56,14 +56,14 @@ LCD1602A::LCD1602A (uint16_t pin0,uint16_t pin1, uint16_t pin2, uint16_t pin3, u
   
   _sr_init = 0;   // 0 by default
   
-  pin0 = _dataPin[0];
-  pin1 = _dataPin[1];
-  pin2 = _dataPin[2];
-  pin3 = _dataPin[3];
-  pin4 = _dataPin[4];
-  pin5 = _dataPin[5];
-  pin6 = _dataPin[6];
-  pin7 = _dataPin[7];
+  _dataPin[0] = pin0;
+  _dataPin[1] = pin1;
+  _dataPin[2] = pin2;
+  _dataPin[3] = pin3;
+  _dataPin[4] = pin4;
+  _dataPin[5] = pin5;
+  _dataPin[6] = pin6;
+  _dataPin[7] = pin7;
   
   pinMode (bright_pin, OUTPUT);
   
